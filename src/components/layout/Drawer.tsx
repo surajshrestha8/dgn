@@ -8,19 +8,18 @@ import {
     AppBarSpacer,
     Breadcrumb,
     Avatar,
-    DataModel,
  } from '@progress/kendo-react-layout';
+import { useNotificationStore } from '../../store/app.store';
 
 import { Button } from '@progress/kendo-react-buttons';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Notification } from '@progress/kendo-react-notification';
+import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import { useState } from 'react';
 import { useBreadcrumbs } from '../../hooks/breadcrumbs';
 let kendokaAvatar =
   "https://www.telerik.com/kendo-react-ui-develop/images/kendoka-react.png";
-interface DataModels  {
-  text: string
-}
+
   const itemss = [
     {
       id: "home",
@@ -62,16 +61,12 @@ const CustomItem = (props: any) => {
   
   const DrawerContainer = (props: any) => {
     const  { breadCrumbData } = useBreadcrumbs();
-   
- 
-
-
-    
     const [drawerExpanded, setDrawerExpanded] = useState<boolean>(true);
     const navigate = useNavigate();
     const clickCreate = () => {
-      navigate('/category');
+      navigate(`${breadCrumbData[1]['id']}/create`);
     }
+    const { removeSuccess, success, message } = useNotificationStore();
     const [items, setItems] = useState<Array<any>>([
       {
         text: "Admin",
@@ -173,8 +168,7 @@ const CustomItem = (props: any) => {
           visible: parent["data-expanded"],
         };
       }
-      return item;
-      
+      return item; 
     });
    
     return (
@@ -194,13 +188,22 @@ const CustomItem = (props: any) => {
             <AppBarSection>
                 
                 <Avatar type="image">
-                    <img src={kendokaAvatar} />
+                  <img src={kendokaAvatar} alt="Kendo Logo" />
                 </Avatar>
                 <Button fillMode={"link"} style={{color:'white'}}>Logout</Button>
             </AppBarSection>
 
 
         </AppBar>
+        {success && (
+            <Notification
+              type={{ style: "success", icon: true }}
+              closable={true}
+              onClose={() => removeSuccess()}
+            >
+              <span>{message}</span>
+            </Notification>
+          )}
         <Drawer
           expanded={drawerExpanded}
           mode="push"
@@ -213,21 +216,26 @@ const CustomItem = (props: any) => {
           style={{ height: '80vh'}}
         >
           <DrawerContent>
-              <div style={{display:'flex', justifyContent: 'space-between', marginTop: '10px'}}>
-             
-            
-                        <Breadcrumb data={breadCrumbData} style={{ color: 'black' }}></Breadcrumb>
-           
-                 
-                        <Button style={{ marginRight: '10px'}} onClick={clickCreate} themeColor={"tertiary"}>Create</Button>
-              </div>
+            <div style={{display:'flex', justifyContent: 'space-between', marginTop: '10px'}}>
+              <Breadcrumb 
+                data={breadCrumbData}
+                style={{ color: 'black' }}
+              ></Breadcrumb>
+              {breadCrumbData.length===2 && 
+                <Button
+                  style={{ marginRight: '10px'}}
+                  onClick={clickCreate}
+                  themeColor={"tertiary"}
+                >
+                  Create
+                </Button> 
+              }       
+            </div>
               {props.children}
-            
           </DrawerContent>
         </Drawer>
 
       </div>
     );
   };
-
 export default DrawerContainer;
