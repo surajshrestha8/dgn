@@ -1,7 +1,40 @@
-import { Drawer, DrawerContent, DrawerSelectEvent, DrawerItem, AppBar, AppBarSection, AppBarSpacer } from '@progress/kendo-react-layout';
+import { 
+    Drawer,
+    DrawerContent,
+    DrawerSelectEvent,
+    DrawerItem,
+    AppBar,
+    AppBarSection,
+    AppBarSpacer,
+    Breadcrumb,
+    Avatar,
+    DataModel,
+ } from '@progress/kendo-react-layout';
+
 import { Button } from '@progress/kendo-react-buttons';
+import { useLocation, useNavigate } from 'react-router-dom';
 import React from 'react';
 import { useState } from 'react';
+import { useBreadcrumbs } from '../../hooks/breadcrumbs';
+let kendokaAvatar =
+  "https://www.telerik.com/kendo-react-ui-develop/images/kendoka-react.png";
+interface DataModels  {
+  text: string
+}
+  const itemss = [
+    {
+      id: "home",
+      text: "Home",
+      iconClass: "k-i-home",
+    },
+    {
+      id: "products",
+      text: "Products",
+    },
+  
+  ];
+console.log(itemss);
+
 
 const CustomItem = (props: any) => {
     const { visible, ...others } = props;
@@ -28,13 +61,23 @@ const CustomItem = (props: any) => {
   };
   
   const DrawerContainer = (props: any) => {
-    const [drawerExpanded, setDrawerExpanded] = React.useState<boolean>(true);
-    const [items, setItems] = React.useState<Array<any>>([
+    const  { breadCrumbData } = useBreadcrumbs();
+   
+ 
+
+
+    
+    const [drawerExpanded, setDrawerExpanded] = useState<boolean>(true);
+    const navigate = useNavigate();
+    const clickCreate = () => {
+      navigate('/category');
+    }
+    const [items, setItems] = useState<Array<any>>([
       {
         text: "Admin",
         icon: "k-i-user",
         id: 1,
-        route: "/",
+        route: "/admin",
         ["data-expanded"]: false,
       },
       {
@@ -42,6 +85,7 @@ const CustomItem = (props: any) => {
         icon: "k-i-plus",
         id: 10,
         parentId: 1,
+        route: "/admin/create"
       },
       { separator: true },
       {
@@ -56,7 +100,7 @@ const CustomItem = (props: any) => {
         icon: "k-i-minus",
         id: 4,
         parentId: 2,
-        route: "",
+        route: "/category",
         ["data-expanded"]: false,
       },
       {
@@ -81,18 +125,11 @@ const CustomItem = (props: any) => {
         route: "/travel",
       },
       {
-        text: "Europe",
-        icon: "k-i-minus",
+        text: "News",
+        icon: "",
+        ["data-expanded"]: false,
         id: 6,
-        parentId: 3,
-        route: "/travel/europe",
-      },
-      {
-        text: "North America",
-        icon: "k-i-minus",
-        id: 7,
-        parentId: 3,
-        route: "/travel/america",
+        route: "/news",
       },
     ]);
   
@@ -121,7 +158,10 @@ const CustomItem = (props: any) => {
           ...others,
         };
       });
+     
       setItems(newData);
+     
+      navigate(ev.itemTarget.props.route);
     };
   
     const data = items.map((item) => {
@@ -134,20 +174,31 @@ const CustomItem = (props: any) => {
         };
       }
       return item;
+      
     });
-  
+   
     return (
       <div>
-        <AppBar style={{ backgroundColor: '#5b8af0', color: 'white' }}>
+        <AppBar  style={{ backgroundColor: '#5b8af0', color: 'white', fontFamily: 'sans-serif'}}>
             <AppBarSection>
                 <button className="k-button k-button-md k-rounded-md k-button-flat k-button-flat-base" onClick={handleClick}>
                 <span className="k-icon k-i-menu" />
                 </button>
             </AppBarSection>
-            <AppBarSpacer style={{ width : 8 }} />
+            <AppBarSpacer style={{ width : 4 }} />
             <AppBarSection>
                 <h3 className="title">DGH-CMS</h3>
             </AppBarSection>
+            <AppBarSpacer style={{ width: 34 }} />
+            <AppBarSpacer />
+            <AppBarSection>
+                
+                <Avatar type="image">
+                    <img src={kendokaAvatar} />
+                </Avatar>
+                <Button fillMode={"link"} style={{color:'white'}}>Logout</Button>
+            </AppBarSection>
+
 
         </AppBar>
         <Drawer
@@ -157,9 +208,24 @@ const CustomItem = (props: any) => {
           items={data}
           item={CustomItem}
           onSelect={onSelect}
+          animation={{ duration: 500 }}
+          mini={true}
+          style={{ height: '80vh'}}
         >
-          <DrawerContent>{props.children}</DrawerContent>
+          <DrawerContent>
+              <div style={{display:'flex', justifyContent: 'space-between', marginTop: '10px'}}>
+             
+            
+                        <Breadcrumb data={breadCrumbData} style={{ color: 'black' }}></Breadcrumb>
+           
+                 
+                        <Button style={{ marginRight: '10px'}} onClick={clickCreate} themeColor={"tertiary"}>Create</Button>
+              </div>
+              {props.children}
+            
+          </DrawerContent>
         </Drawer>
+
       </div>
     );
   };
