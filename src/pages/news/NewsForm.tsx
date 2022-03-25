@@ -2,10 +2,9 @@ import { Form, Field, FormElement} from '@progress/kendo-react-form';
 import { DropDownListFilterChangeEvent, } from '@progress/kendo-react-dropdowns';
 import { Button } from '@progress/kendo-react-buttons';
 import { useNavigate } from 'react-router-dom';
-import { Loader } from '@progress/kendo-react-indicators';
 import { useMutation, useQueryClient } from 'react-query';
 import { useSaveTodo } from '../../hooks/todo/todohooks';
-import { Notification } from '@progress/kendo-react-notification';
+import ButtonComponent from '../../components/Button/Buttons';
 import { useEffect, useState } from 'react';
 import { FormInput, DescriptionInput, DatePickerInput, RadioInput, DropdownInput } from '../../components/FormInputs/FormInputs';
 import { useNotificationStore } from '../../store/app.store';
@@ -131,10 +130,7 @@ const allData = [
                          textField="text"
                          validator={dropDownValidator}
                          />
-                  <Button themeColor={"tertiary"} type="submit" style={{marginTop: '10px'}} >
-                      {isLoading && <Loader type={"pulsing"} /> }
-                      {!isLoading && 'Submit'}
-                  </Button>
+                  <ButtonComponent themeColor="tertiary" text="Submit" loading={isLoading} />
                   <Button themeColor={"primary"} style={{marginTop: '10px', marginLeft: '10px'}} onClick={()=>navigate('/news')}>
                       Cancel
                   </Button>

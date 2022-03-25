@@ -8,6 +8,8 @@ import {  BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools'
 import EditNews from './pages/news/edit-news';
+import LoginPage from './pages/login/login';
+import RegisterPage from './pages/register/register';
 
 function App() {
   const queryClient = new QueryClient();
@@ -23,10 +25,10 @@ function App() {
           <Route path="/news" element={<News />} />
           <Route path = "/news/create" element={<CreateNews />} /> 
           <Route path="/news/edit/:id" element={<EditNews />} />
-
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
         </Routes>
         </DrawerItem>
-        <Footer />
         <ReactQueryDevtools initialIsOpen={true} />
       </Router>
       </QueryClientProvider>

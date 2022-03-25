@@ -132,6 +132,20 @@ const CustomItem = (props: any) => {
         id: 6,
         route: "/news",
       },
+      {
+        text: "Login",
+        icon: "",
+        ["data-expanded"]: false,
+        id:  7,
+        route: "/login",
+      },
+      {
+        text: "Registration",
+        icon: "",
+        ["data-expanded"]: false,
+        id:  8,
+        route: "/register",
+      }
     ]);
     const position = {
       topLeft: { top: 0, left: 0, alignItems: "flex-start" },
@@ -257,6 +271,11 @@ const CustomItem = (props: any) => {
               {props.children}
           </DrawerContent>
         </Drawer>
+        <AppBar position="bottom" positionMode="sticky" style={{ justifyContent: 'center' }}>
+            <AppBarSection>
+                <h3 className="title">Copyright @DGH-CMS</h3>
+            </AppBarSection>
+        </AppBar>
 
       </div>
     );

@@ -25,3 +25,26 @@ export const dropDownValidator = (value: string) =>
 
 export const dropDownCountryValidator = (value: string) => 
     !value ? "Select a country" : ""
+
+const emailRegex : RegExp = new RegExp(/\S+@\S+\.\S+/);
+  export const emailValidator = (value: string) => 
+  !value ? "Enter email"
+  : emailRegex.test(value) ? "" : "Enter valid email"
+
+const nameRegex: RegExp = new RegExp(/^[A-Z][a-z0-9_-]{0,30}$/); 
+const whiteSpaceRegex: RegExp = new RegExp(/\s/)
+const numberRegex: RegExp = new RegExp(/\d/);
+
+export const firstNameValidator = (value:string) =>
+!value ?  "Enter  name"
+: whiteSpaceRegex.test(value) ? "Name should not contain white space"
+: !nameRegex.test(value) ? "First letter should be capital" 
+: numberRegex.test(value) ? "Name should not contain digits"
+: "" 
+
+
+export const passwordValidator = (value: string) => 
+  !value ? "Enter password"
+  : value.length <= 8 ? "Password must be atleast 8 characters long"
+  : !numberRegex.test(value) ? "Password must contain numbers"
+  : ""

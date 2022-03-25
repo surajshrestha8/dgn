@@ -237,3 +237,6 @@ export const FormInput = (fieldRenderProps: FieldRenderProps) => {
       </FieldWrapper>
     );
   };
+
+  //for login and registration
+  
