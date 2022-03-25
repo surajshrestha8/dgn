@@ -10,11 +10,12 @@ import {
     Avatar,
  } from '@progress/kendo-react-layout';
 import { useNotificationStore } from '../../store/app.store';
+import { Fade } from '@progress/kendo-react-animation';
 
 import { Button } from '@progress/kendo-react-buttons';
-import { Notification } from '@progress/kendo-react-notification';
+import { Notification, NotificationGroup } from '@progress/kendo-react-notification';
 import { useNavigate } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useBreadcrumbs } from '../../hooks/breadcrumbs';
 let kendokaAvatar =
@@ -58,7 +59,6 @@ const CustomItem = (props: any) => {
       </React.Fragment>
     );
   };
-  
   const DrawerContainer = (props: any) => {
     const  { breadCrumbData } = useBreadcrumbs();
     const [drawerExpanded, setDrawerExpanded] = useState<boolean>(true);
@@ -67,6 +67,11 @@ const CustomItem = (props: any) => {
       navigate(`${breadCrumbData[1]['id']}/create`);
     }
     const { removeSuccess, success, message } = useNotificationStore();
+    useEffect(()=> {
+      setTimeout(()=>{
+        removeSuccess();
+      },3000)
+    },[message]);
     const [items, setItems] = useState<Array<any>>([
       {
         text: "Admin",
@@ -88,7 +93,7 @@ const CustomItem = (props: any) => {
         icon: "k-i-heart",
         id: 2,
         ["data-expanded"]: false,
-        route: "/food",
+        route: "/product",
       },
       {
         text: "Category",
@@ -103,6 +108,7 @@ const CustomItem = (props: any) => {
         icon: 'k-i-plus',
         id: 9,
         parentId: 4,
+        route: 'product/category/create',
       },
       {
         text: "Brand",
@@ -117,7 +123,7 @@ const CustomItem = (props: any) => {
         icon: "k-i-globe-outline",
         ["data-expanded"]: false,
         id: 3,
-        route: "/travel",
+        route: "/user",
       },
       {
         text: "News",
@@ -127,7 +133,15 @@ const CustomItem = (props: any) => {
         route: "/news",
       },
     ]);
-  
+    const position = {
+      topLeft: { top: 0, left: 0, alignItems: "flex-start" },
+      topCenter: { top: 10, left: "50%", transform: "translateX(-50%)" },
+      topRight: { top: 0, right: 0, alignItems: "flex-end" },
+      bottomLeft: { bottom: 0, left: 0, alignItems: "flex-start" },
+      bottomCenter: { bottom: 0, left: "50%", transform: "translateX(-50%)" },
+      bottomRight: { bottom: 0, right: 0, alignItems: "flex-end" },
+    };
+
     const handleClick = () => {
       setDrawerExpanded(!drawerExpanded);
     };
@@ -137,7 +151,7 @@ const CustomItem = (props: any) => {
       const isParent = currentItem["data-expanded"] !== undefined;
       const nextExpanded = !currentItem["data-expanded"];
   
-      const newData = items.map((item) => {
+    const newData = items.map((item) => {
         const {
           selected,
           ["data-expanded"]: currentExpanded,
@@ -153,9 +167,7 @@ const CustomItem = (props: any) => {
           ...others,
         };
       });
-     
-      setItems(newData);
-     
+      setItems(newData);     
       navigate(ev.itemTarget.props.route);
     };
   
@@ -195,15 +207,26 @@ const CustomItem = (props: any) => {
 
 
         </AppBar>
-        {success && (
-            <Notification
-              type={{ style: "success", icon: true }}
-              closable={true}
-              onClose={() => removeSuccess()}
-            >
-              <span>{message}</span>
-            </Notification>
-          )}
+      
+
+      <NotificationGroup 
+        style={position.topCenter} 
+      >
+          <Fade transitionExitDuration={3000}>
+            {success && (
+                <Notification
+                  type={{ style: "success", icon: true }}
+                  closable={true}
+                  style={{ width: '200px',height: '30px'}}
+                  onClose={() => removeSuccess()}
+                >
+                  <span>{message}</span>
+                </Notification>
+                
+              )}
+          </Fade>
+      </NotificationGroup>
+     
         <Drawer
           expanded={drawerExpanded}
           mode="push"

@@ -5,18 +5,19 @@ import { useGetTodo, useDeleteTodo } from "../../hooks/todo/todohooks";
 import { Grid, GridColumn, GridPageChangeEvent} from '@progress/kendo-react-grid';
 import { Loader } from "@progress/kendo-react-indicators";
 import { Dialog, DialogActionsBar } from "@progress/kendo-react-dialogs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNotificationStore } from "../../store/app.store";
 
 interface PageState {
     skip: number;
     take: number;
-  }
-  const initialDataState: PageState = { skip: 0, take: 10 };
+};
+
+const initialDataState: PageState = { skip: 0, take: 10 };
 
 const News = () => {
+    
     const [page, setPage] = useState<PageState>(initialDataState);
-
     const pageChange = (event: GridPageChangeEvent) => {
       setPage(event.page);
     };
@@ -32,20 +33,18 @@ const News = () => {
     const { data, isLoading } = useQuery('todo',useGetTodo);
     const { mutateAsync, isLoading: deleteLoading } = useMutation(useDeleteTodo,{
         onSuccess: () => {
-            setSuccessMessge("Todo deleted");
+            setSuccessMessge("Todo deleted successfully");
             setSuccess();
-      
         }
     });
-    const { setSuccess, setSuccessMessge } = useNotificationStore();
+    const { setSuccess, setSuccessMessge} = useNotificationStore();
 
     const Actions =(e:any) => {
         return (
             <td>
                 <Button themeColor={"tertiary"} style={{marginLeft:'10px', marginRight:'10px'}} onClick={() => navigate(`/news/edit/${e.dataItem.id}`)}>Edit</Button>
-                <Button themeColor={"error"} onClick={()=>toggleDialog(e.dataItem.id)}>
-                  {deleteLoading && <Loader type={"pulsing"} />}
-                  {!deleteLoading && 'Delete'}    
+                <Button themeColor={"error"} onClick={()=>toggleDialog(e.dataItem.id)}>  
+                  Delete  
                 </Button>   
             </td>
         )
@@ -57,16 +56,15 @@ const News = () => {
         settodoId("");
         setVisible(!visible);
     };
-
     return (
         <>        
             {isLoading && <Loader type={"pulsing"} /> }
             <Grid 
-              data = {data.slice(page.skip, page.take + page.skip)}
+              data = {data?.slice(page.skip, page.take + page.skip)}
               style={{ marginLeft:'10px', marginRight:'10px',marginTop: '10px'}}
               skip={page.skip}
               take={page.take}
-              total={data.length}
+              total={data?.length}
               pageable={true}
               onPageChange={pageChange}
             >
@@ -93,7 +91,8 @@ const News = () => {
               className="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base"
               onClick={deleteItem}
             >
-              Yes
+               {deleteLoading && <Loader type={"pulsing"} />}
+               {!deleteLoading && 'Delete'}
             </button>
           </DialogActionsBar>
         </Dialog>

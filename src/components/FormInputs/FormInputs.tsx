@@ -1,5 +1,5 @@
 import { DatePicker } from '@progress/kendo-react-dateinputs';
-import { DropDownList, DropDownListFilterChangeEvent, } from '@progress/kendo-react-dropdowns';
+import { DropDownList } from '@progress/kendo-react-dropdowns';
 import { FieldRenderProps , FieldWrapper} from '@progress/kendo-react-form';
 import { Input, RadioGroup } from '@progress/kendo-react-inputs';
 import { Label, Error, Hint } from '@progress/kendo-react-labels';

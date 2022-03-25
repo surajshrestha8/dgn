@@ -56,7 +56,7 @@ const allData = [
     const queryClient = useQueryClient();
     const { mutateAsync, isLoading } = useMutation('todo',useSaveTodo,{
         onSuccess:()=> {
-            setSuccessMessge("Todo addedd successfully");
+            setSuccessMessge("Todo added successfully");
             setSuccess();
             navigate('/news');
         } 
