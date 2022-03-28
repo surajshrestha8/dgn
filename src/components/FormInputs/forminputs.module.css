@@ -1,0 +1,21 @@
+
+.inputbox {
+    display:flex;
+    border:1px solid #dee0df;
+    border-radius: 5px;
+}
+
+.inputbox:focus {
+    border: 1px solid red;
+}
+.textbox {
+    border:none;
+    outline:none;
+}
+
+.textbox:focus {
+    border-color: none;
+    border : none;
+    outline:none;
+
+}

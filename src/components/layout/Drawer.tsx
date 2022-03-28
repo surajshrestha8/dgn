@@ -199,7 +199,7 @@ const CustomItem = (props: any) => {
    
     return (
       <div>
-        <AppBar  style={{ backgroundColor: '#5b8af0', color: 'white', fontFamily: 'sans-serif'}}>
+        <AppBar positionMode={"sticky"} style={{ backgroundColor: '#5b8af0', color: 'white', fontFamily: 'sans-serif'}}>
             <AppBarSection>
                 <button className="k-button k-button-md k-rounded-md k-button-flat k-button-flat-base" onClick={handleClick}>
                 <span className="k-icon k-i-menu" />
@@ -271,11 +271,11 @@ const CustomItem = (props: any) => {
               {props.children}
           </DrawerContent>
         </Drawer>
-        <AppBar position="bottom" positionMode="sticky" style={{ justifyContent: 'center' }}>
+        {/* <AppBar position="bottom" positionMode={"fixed"} style={{ justifyContent: 'center' }}>
             <AppBarSection>
                 <h3 className="title">Copyright @DGH-CMS</h3>
             </AppBarSection>
-        </AppBar>
+        </AppBar> */}
 
       </div>
     );

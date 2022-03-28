@@ -1,5 +1,4 @@
 import DrawerItem from './components/layout/Drawer';
-import Footer from './components/layout/Footer';
 import HomePage from './pages/home/homepage';
 import CreateNews from './pages/news/create-news';
 import News from './pages/news/news';
@@ -11,16 +10,15 @@ import EditNews from './pages/news/edit-news';
 import LoginPage from './pages/login/login';
 import RegisterPage from './pages/register/register';
 
+
 function App() {
   const queryClient = new QueryClient();
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>
       <Router>
-       
         <DrawerItem>
         <Routes>
-          
           <Route path="/" element={<HomePage />} />
           <Route path="/news" element={<News />} />
           <Route path = "/news/create" element={<CreateNews />} /> 
@@ -32,7 +30,6 @@ function App() {
         <ReactQueryDevtools initialIsOpen={true} />
       </Router>
       </QueryClientProvider>
-    
     </div>
   );
 }

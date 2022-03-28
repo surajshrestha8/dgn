@@ -23,23 +23,23 @@ import {
   } from "@progress/kendo-data-query";
 
 const NewsForm = ({todo}: any, loading:any) => {
-    const datas = [
+  const datas = [
         { label: "Female", value: "female" },
         { label: "Male", value: "male" },
         { label: "Other", value: "other" },
       ];
 
-      const country = ["Nepal", "India", "Pakistan", "Bangladesh", "Sri-Lanka", "Bhutan",];
+  const country = ["Nepal", "India", "Pakistan", "Bangladesh", "Sri-Lanka", "Bhutan",];
 
-      const { setSuccessMessge, setSuccess } = useNotificationStore();
+  const { setSuccessMessge, setSuccess } = useNotificationStore();
    
       
-const allData = [
+  const allData = [
     { text: "Pokhara"},{text:"Kathmandu"},{text:"Dharan"},{text:"Birgunj"},{text:"Butwal"},{text:"Mahendranagar"} ];
 
   console.log(allData.slice());
 
-      const [data, setData] = useState(allData.slice());
+  const [data, setData] = useState(allData.slice());
 
   const filterData = (filter: FilterDescriptor | CompositeFilterDescriptor) => {
     const data = allData.slice();
@@ -50,7 +50,6 @@ const allData = [
     setData(filterData(event.filter));
   };
 
-      
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const { mutateAsync, isLoading } = useMutation('todo',useSaveTodo,{
@@ -73,72 +72,66 @@ const allData = [
         setForm(todo);
 
     },[todo]);
-  
-    console.log(form);
     
-
     return (
         <>
-     
-        <Form
-         onSubmit={handleSubmit}
-         render={() => (
-             <FormElement style={{ width: 400, marginLeft: '20px' }}>
-           
-
-                 <Field
-                   name="title"
-                   label="Title"
-                   placeholder="Enter title"
-                   component={FormInput}
-                   validator={nameValidator}
-                  />
+        <div style={{display:'flex',justifyContent:'center'}}>
+          <Form
+            onSubmit={handleSubmit}
+            render={() => (
+              <FormElement style={{ width: 400, marginLeft: '20px' }}>
                   <Field
-                    name="description"
-                    label="Description"
-                    placeholder = "Enter description"
-                    component= {DescriptionInput}
-                    validator={descriptionValidator}
-                  />
-                 <Field 
-                   name="date"
-                   label="Date"
-                   component={DatePickerInput}
-                   validator={DateValidator}
-                   />
-                 <Field
-                   name="gender"
-                   component={RadioInput}
-                   data={datas}
-                   validator={genderValidator}
-                   />
-                   <Field 
-                     name="country"
-                     label="Country"
-                     component={DropdownInput}
-                     data={country}
-                     validator={dropDownCountryValidator}
-                     />
-
-                       <Field
-                         name="city"
-                         component={DropdownInput}
-                         data={data}
-                         label="City"
-                         filterable={true}
-                         onFilterChange={filterChange}
-                         textField="text"
-                         validator={dropDownValidator}
-                         />
-                  <ButtonComponent themeColor="tertiary" text="Submit" loading={isLoading} />
-                  <Button themeColor={"primary"} style={{marginTop: '10px', marginLeft: '10px'}} onClick={()=>navigate('/news')}>
+                    name="title"
+                    label="Title"
+                    placeholder="Enter title"
+                    component={FormInput}
+                    validator={nameValidator}
+                    />
+                    <Field
+                      name="description"
+                      label="Description"
+                      icon=""
+                      placeholder = "Enter description"
+                      component= {DescriptionInput}
+                      validator={descriptionValidator}
+                    />
+                  <Field 
+                    name="date"
+                    label="Date"
+                    component={DatePickerInput}
+                    validator={DateValidator}
+                    />
+                  <Field
+                    name="gender"
+                    component={RadioInput}
+                    data={datas}
+                    validator={genderValidator}
+                    />
+                    <Field 
+                      name="country"
+                      label="Country"
+                      component={DropdownInput}
+                      data={country}
+                      validator={dropDownCountryValidator}
+                      />
+                    <Field
+                      name="city"
+                      component={DropdownInput}
+                      data={data}
+                      label="City"
+                      filterable={true}
+                      onFilterChange={filterChange}
+                      textField="text"
+                      validator={dropDownValidator}
+                      />
+                    <ButtonComponent themeColor="tertiary" text="Submit" loading={isLoading} />
+                    <Button themeColor={"primary"} style={{marginTop: '10px', marginLeft: '10px'}} onClick={()=>navigate('/news')}>
                       Cancel
-                  </Button>
-             </FormElement>
-             
-
-         )}
-         />
+                    </Button>
+              </FormElement>
+          )}
+          />
+            </div>
             </>
     )
 };
