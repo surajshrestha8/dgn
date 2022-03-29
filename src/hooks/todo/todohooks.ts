@@ -14,6 +14,11 @@ export const useDeleteTodo = async (id: any) => {
     });
 
 };
+export const useUpdateTodo = async({id,data}:any) => {
+    console.log(data,id);
+    const response  = await axios.put(`https://6231811805f5f4d40d7bcb85.mockapi.io/todo/${id}`,data);
+    console.log(response);
+}
 
 export const useGetTodoItem = async ( { queryKey } : any) => {
    const { id } = queryKey[1];

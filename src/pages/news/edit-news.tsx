@@ -5,6 +5,11 @@ import NewsForm from "./NewsForm";
 const EditNews = () => {
     const { id } = useParams();
     const { data: todo, isLoading,isSuccess} = useQuery(['todo',{id} ],useGetTodoItem);
-    return <NewsForm todo={todo} isSuccess={isSuccess} loading={isLoading} />
+    return <NewsForm 
+              todo={todo}
+              isSuccess={isSuccess}
+              loading={isLoading}
+              id={id}
+            />
 }
 export default EditNews;

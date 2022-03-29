@@ -3,7 +3,7 @@ import { DropDownListFilterChangeEvent, } from '@progress/kendo-react-dropdowns'
 import { Button } from '@progress/kendo-react-buttons';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
-import { useSaveTodo } from '../../hooks/todo/todohooks';
+import { useSaveTodo, useUpdateTodo } from '../../hooks/todo/todohooks';
 import ButtonComponent from '../../components/Button/Buttons';
 import { useEffect, useState } from 'react';
 import { FormInput, DescriptionInput, DatePickerInput, RadioInput, DropdownInput } from '../../components/FormInputs/FormInputs';
@@ -23,7 +23,7 @@ import {
   } from "@progress/kendo-data-query";
 import { Loader } from '@progress/kendo-react-indicators';
 
-const NewsForm = ({todo,isSuccess}: any, loading:any) => {
+const NewsForm = ({todo,isSuccess,id}: any, loading:any) => {
 
   const datas = [
         { label: "Female", value: "female" },
@@ -34,7 +34,7 @@ const NewsForm = ({todo,isSuccess}: any, loading:any) => {
   const country = ["Nepal", "India", "Pakistan", "Bangladesh", "Sri-Lanka", "Bhutan",];
 
   const { setSuccessMessge, setSuccess } = useNotificationStore();
-   
+
       
   const allData = [
     { text: "Pokhara"},{text:"Kathmandu"},{text:"Dharan"},{text:"Birgunj"},{text:"Butwal"},{text:"Mahendranagar"} ];
@@ -61,21 +61,29 @@ const NewsForm = ({todo,isSuccess}: any, loading:any) => {
             navigate('/news');
         } 
     });
-    const handleSubmit = async (data: object) => {
-        mutateAsync(data);
-        console.log(data);
-        queryClient.invalidateQueries('todo');
-    };
-    const [form,setForm] = useState<any>({});
-    useEffect(() => {
-        if(!todo) {
-            return;
-        }
-        setForm(todo);
+    const {mutateAsync:updateTodo,isLoading:updateLoading} = useMutation('todo',useUpdateTodo,{
+      onSuccess:()=> {
+        setSuccessMessge("Todo updatedSuccessFully");
+        setSuccess();
+        navigate('/news');
+      }
 
-    },[todo]);
-    console.log(form);
-    console.log(isSuccess);
+    });
+    const handleSubmit = async (data: object) => {
+        if(!id) {
+          mutateAsync(data);
+          console.log(data);
+          queryClient.invalidateQueries('todo');
+
+        } else {
+          updateTodo({data,id});
+          console.log(id);
+          console.log(data);
+          queryClient.invalidateQueries('todo');
+
+        }
+    
+    };
     
     return (
         <>
