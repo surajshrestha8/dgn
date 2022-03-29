@@ -1,5 +1,4 @@
 import DrawerItem from './components/layout/Drawer';
-import HomePage from './pages/home/homepage';
 import CreateNews from './pages/news/create-news';
 import News from './pages/news/news';
 import '@progress/kendo-theme-default/dist/all.css';
@@ -9,25 +8,47 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import EditNews from './pages/news/edit-news';
 import LoginPage from './pages/login/login';
 import RegisterPage from './pages/register/register';
+import ForgotPassword from './pages/login/forgotpassword';
+import ProtectedRoutes from './routes/ProtectedRoutes';
+import { useAuthStore, useNotificationStore } from './store/app.store';
+import authRoutes from './routes/authRoutes';
+import ResetPassword from './pages/login/resetpassword';
 
 
 function App() {
   const queryClient = new QueryClient();
+  const { isLoggedIn } = useAuthStore();
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>
       <Router>
+        {!isLoggedIn && (
+          <Routes>
+          {authRoutes.map((routes)=>(
+            <Route key={routes.id} path={routes.path} element={
+              <ProtectedRoutes>
+                {routes.element}
+              </ProtectedRoutes>
+            }
+            />
+          ))}
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/password/forgot" element={<ForgotPassword />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/password/reset" element={<ResetPassword />} />
+          </Routes>
+        )}
+  
+      {isLoggedIn && (
         <DrawerItem>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/news" element={<News />} />
-          <Route path = "/news/create" element={<CreateNews />} /> 
-          <Route path="/news/edit/:id" element={<EditNews />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-        </Routes>
+          <Routes>
+            <Route path="/news" element={<News />} />
+            <Route path = "/news/create" element={<CreateNews />} /> 
+            <Route path="/news/edit/:id" element={<EditNews />} />
+          </Routes>  
         </DrawerItem>
-        <ReactQueryDevtools initialIsOpen={true} />
+      )}
+      <ReactQueryDevtools initialIsOpen={false} />
       </Router>
       </QueryClientProvider>
     </div>

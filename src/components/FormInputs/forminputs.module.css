@@ -19,3 +19,13 @@
     outline:none;
 
 }
+.myinput {
+    border: none;
+    outline: none;
+  }
+  .myinput:focus {
+    border:none;
+    outline: none;
+    box-shadow: none;
+    background-color: none;
+  }

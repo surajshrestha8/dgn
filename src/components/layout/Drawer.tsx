@@ -9,7 +9,7 @@ import {
     Breadcrumb,
     Avatar,
  } from '@progress/kendo-react-layout';
-import { useNotificationStore } from '../../store/app.store';
+import { useAuthStore, useNotificationStore } from '../../store/app.store';
 import { Fade } from '@progress/kendo-react-animation';
 
 import { Button } from '@progress/kendo-react-buttons';
@@ -60,18 +60,31 @@ const CustomItem = (props: any) => {
     );
   };
   const DrawerContainer = (props: any) => {
+ 
+
     const  { breadCrumbData } = useBreadcrumbs();
+    const { removeSuccess, success, message,setSuccessMessge,setSuccess } = useNotificationStore();
     const [drawerExpanded, setDrawerExpanded] = useState<boolean>(true);
+    const {logout} = useAuthStore();
     const navigate = useNavigate();
+    const toLogout = () => {
+      logout();
+      navigate('/login');
+      setSuccessMessge("Logged out");
+      setSuccess();
+      
+    }
+ 
     const clickCreate = () => {
       navigate(`${breadCrumbData[1]['id']}/create`);
     }
-    const { removeSuccess, success, message } = useNotificationStore();
+  
     useEffect(()=> {
       setTimeout(()=>{
         removeSuccess();
       },3000)
-    },[message]);
+    },[success]);
+    console.log(success);
     const [items, setItems] = useState<Array<any>>([
       {
         text: "Admin",
@@ -132,24 +145,11 @@ const CustomItem = (props: any) => {
         id: 6,
         route: "/news",
       },
-      {
-        text: "Login",
-        icon: "",
-        ["data-expanded"]: false,
-        id:  7,
-        route: "/login",
-      },
-      {
-        text: "Registration",
-        icon: "",
-        ["data-expanded"]: false,
-        id:  8,
-        route: "/register",
-      }
+
     ]);
     const position = {
       topLeft: { top: 0, left: 0, alignItems: "flex-start" },
-      topCenter: { top: 10, left: "50%", transform: "translateX(-50%)" },
+      topCenter: {  left: "50%" },
       topRight: { top: 0, right: 0, alignItems: "flex-end" },
       bottomLeft: { bottom: 0, left: 0, alignItems: "flex-start" },
       bottomCenter: { bottom: 0, left: "50%", transform: "translateX(-50%)" },
@@ -216,18 +216,16 @@ const CustomItem = (props: any) => {
                 <Avatar type="image">
                   <img src={kendokaAvatar} alt="Kendo Logo" />
                 </Avatar>
-                <Button fillMode={"link"} style={{color:'white'}}>Logout</Button>
+                <Button fillMode={"link"} style={{color:'white'}} onClick={toLogout}>Logout</Button>
             </AppBarSection>
 
 
         </AppBar>
-      
-
-      <NotificationGroup 
+     
+        <NotificationGroup 
         style={position.topCenter} 
       >
-          <Fade transitionExitDuration={3000}>
-            {success && (
+            {success &&  (
                 <Notification
                   type={{ style: "success", icon: true }}
                   closable={true}
@@ -238,8 +236,12 @@ const CustomItem = (props: any) => {
                 </Notification>
                 
               )}
-          </Fade>
+  
       </NotificationGroup>
+
+  
+
+     
      
         <Drawer
           expanded={drawerExpanded}

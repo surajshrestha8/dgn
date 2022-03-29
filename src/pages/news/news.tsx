@@ -5,7 +5,7 @@ import { useGetTodo, useDeleteTodo } from "../../hooks/todo/todohooks";
 import { Grid, GridColumn, GridPageChangeEvent} from '@progress/kendo-react-grid';
 import { Loader } from "@progress/kendo-react-indicators";
 import { Dialog, DialogActionsBar } from "@progress/kendo-react-dialogs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNotificationStore } from "../../store/app.store";
 
 interface PageState {

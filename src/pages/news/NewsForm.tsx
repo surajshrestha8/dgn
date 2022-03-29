@@ -21,8 +21,10 @@ import {
     filterBy,
     FilterDescriptor,
   } from "@progress/kendo-data-query";
+import { Loader } from '@progress/kendo-react-indicators';
 
-const NewsForm = ({todo}: any, loading:any) => {
+const NewsForm = ({todo,isSuccess}: any, loading:any) => {
+
   const datas = [
         { label: "Female", value: "female" },
         { label: "Male", value: "male" },
@@ -72,65 +74,79 @@ const NewsForm = ({todo}: any, loading:any) => {
         setForm(todo);
 
     },[todo]);
+    console.log(form);
+    console.log(isSuccess);
     
     return (
         <>
         <div style={{display:'flex',justifyContent:'center'}}>
-          <Form
-            onSubmit={handleSubmit}
-            render={() => (
-              <FormElement style={{ width: 400, marginLeft: '20px' }}>
-                  <Field
-                    name="title"
-                    label="Title"
-                    placeholder="Enter title"
-                    component={FormInput}
-                    validator={nameValidator}
-                    />
-                    <Field
-                      name="description"
-                      label="Description"
-                      icon=""
-                      placeholder = "Enter description"
-                      component= {DescriptionInput}
-                      validator={descriptionValidator}
-                    />
-                  <Field 
-                    name="date"
-                    label="Date"
-                    component={DatePickerInput}
-                    validator={DateValidator}
-                    />
-                  <Field
-                    name="gender"
-                    component={RadioInput}
-                    data={datas}
-                    validator={genderValidator}
-                    />
-                    <Field 
-                      name="country"
-                      label="Country"
-                      component={DropdownInput}
-                      data={country}
-                      validator={dropDownCountryValidator}
-                      />
-                    <Field
-                      name="city"
-                      component={DropdownInput}
-                      data={data}
-                      label="City"
-                      filterable={true}
-                      onFilterChange={filterChange}
-                      textField="text"
-                      validator={dropDownValidator}
-                      />
-                    <ButtonComponent themeColor="tertiary" text="Submit" loading={isLoading} />
-                    <Button themeColor={"primary"} style={{marginTop: '10px', marginLeft: '10px'}} onClick={()=>navigate('/news')}>
-                      Cancel
-                    </Button>
-              </FormElement>
+          {!isSuccess && <Loader type="pulsing"/>}
+          {isSuccess  && (
+             <Form
+             initialValues={{
+               title: todo?.title || '',
+               description: todo?.description,
+               gender: todo?.gender,
+               country: todo?.country,
+               city: todo?.city,
+             }}
+               onSubmit={handleSubmit}
+               render={() => (
+                 <FormElement style={{ width: 400, marginLeft: '20px' }}>
+                     <Field
+                       name="title"
+                       label="Title"
+                       placeholder="Enter title"
+                       component={FormInput}
+                       validator={nameValidator}
+                       />
+                       <Field
+                         name="description"
+                         label="Description"
+                         icon=""
+                         placeholder = "Enter description"
+                         component= {DescriptionInput}
+                         validator={descriptionValidator}
+                       />
+                     <Field 
+                       name="date"
+                       label="Date"
+                       component={DatePickerInput}
+                       validator={DateValidator}
+                       />
+                     <Field
+                       name="gender"
+                       component={RadioInput}
+                       data={datas}
+                       validator={genderValidator}
+                       />
+                       <Field 
+                         name="country"
+                         label="Country"
+                         component={DropdownInput}
+                         data={country}
+                         validator={dropDownCountryValidator}
+                         />
+                       <Field
+                         name="city"
+                         component={DropdownInput}
+                         data={data}
+                         label="City"
+                         filterable={true}
+                         onFilterChange={filterChange}
+                         textField="text"
+                         validator={dropDownValidator}
+                         />
+                       <ButtonComponent themeColor="tertiary" text="Submit" loading={isLoading} />
+                       <Button themeColor={"primary"} style={{marginTop: '10px', marginLeft: '10px'}} onClick={()=>navigate('/news')}>
+                         Cancel
+                       </Button>
+                 </FormElement>
+             )}
+             />
+
           )}
-          />
+         
             </div>
             </>
     )

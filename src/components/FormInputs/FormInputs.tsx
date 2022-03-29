@@ -57,9 +57,8 @@ export const FormInput = (fieldRenderProps: FieldRenderProps) => {
                 border:none;
                 outline: none;
                 box-shadow: none;
-                background-color: none;
+                background-color: white;
               }
-               
               `
             }
           </style>
@@ -306,14 +305,16 @@ export const FormInput = (fieldRenderProps: FieldRenderProps) => {
           {label}
         </Label>
         <div className={"k-form-field-wrap"} >
-          <div style={{display:'flex',border:'1px solid grey', borderRadius:'5px',marginTop:'10px'}}>
+    
+          <div className={classes.inputbox}>
           <Icon name={icon} style={{alignSelf:'center',marginLeft:'5px'}} themeColor={"dark"} />
+         
           
           <Input
             valid={valid}
             type={type}
             id={id}
-            style={{border:'none',outline:'none'}}
+            className="myinput"
             disabled={disabled}
             ariaDescribedBy={`${hintId} ${errorId}`}
             {...others}
