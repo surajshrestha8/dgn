@@ -44,42 +44,35 @@ const LoginPage = () => {
     return (
         <>
         <div style={{display:'flex',justifyContent:'center',marginBottom:'20px',marginTop:'20px'}}>
-        <NotificationGroup>
-            {success &&  (
-                <Notification
-                  type={{ style: "success", icon: true }}
-                  closable={true}
-                  style={{ width: '200px',height: '30px'}}
-                  onClose={() => removeSuccess()}
-                >
-                  <span>{message}</span>
-                </Notification>
-                
-              )}
-                 {error &&  (
-                <Notification
-                  type={{ style: "error", icon: true }}
-                  closable={true}
-                  style={{ width: '200px',height: '30px'}}
-                  onClose={() => removeError()}
-                >
-                  <span>{message}</span>
-                </Notification>
-                
-              )}
-              
-
-      </NotificationGroup>
-
+          <NotificationGroup>
+              {success &&  (
+                    <Notification
+                      type={{ style: "success", icon: true }}
+                      closable={true}
+                      style={{ width: '200px',height: '30px'}}
+                      onClose={() => removeSuccess()}
+                    >
+                      <span>{message}</span>
+                    </Notification>
+                  
+                )}
+                  {error &&  (
+                    <Notification
+                      type={{ style: "error", icon: true }}
+                      closable={true}
+                      style={{ width: '200px',height: '30px'}}
+                      onClose={() => removeError()}
+                    >
+                      <span>{message}</span>
+                    </Notification>
+                  )}
+          </NotificationGroup>
         </div>
        
-            <div style={{ display: 'flex', justifyContent: 'center'}}>
-            <h1>Login</h1>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center'}} >
-            
-
-            
+        <div style={{ display: 'flex', justifyContent: 'center'}}>
+          <h1>Login</h1>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center'}} >            
             <Form 
               onSubmit={handleSubmit}
               render={() => (

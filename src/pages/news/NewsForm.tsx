@@ -65,6 +65,7 @@ const NewsForm = ({todo,isSuccess,id}: any, loading:any) => {
       onSuccess:()=> {
         setSuccessMessge("Todo updatedSuccessFully");
         setSuccess();
+        queryClient.invalidateQueries('todo');
         navigate('/news');
       }
 
@@ -79,8 +80,6 @@ const NewsForm = ({todo,isSuccess,id}: any, loading:any) => {
           updateTodo({data,id});
           console.log(id);
           console.log(data);
-          queryClient.invalidateQueries('todo');
-
         }
     
     };
@@ -145,7 +144,7 @@ const NewsForm = ({todo,isSuccess,id}: any, loading:any) => {
                          textField="text"
                          validator={dropDownValidator}
                          />
-                       <ButtonComponent themeColor="tertiary" text="Submit" loading={isLoading} />
+                       <ButtonComponent themeColor="tertiary" text="Submit" loading={isLoading || updateLoading} />
                        <Button themeColor={"primary"} style={{marginTop: '10px', marginLeft: '10px'}} onClick={()=>navigate('/news')}>
                          Cancel
                        </Button>

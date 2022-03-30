@@ -4,12 +4,13 @@ import { useGetTodoItem } from "../../hooks/todo/todohooks";
 import NewsForm from "./NewsForm";
 const EditNews = () => {
     const { id } = useParams();
-    const { data: todo, isLoading,isSuccess} = useQuery(['todo',{id} ],useGetTodoItem);
+    const { data: todo, isLoading,isSuccess,isFetching} = useQuery(['todo',{id} ],useGetTodoItem);
     return <NewsForm 
               todo={todo}
               isSuccess={isSuccess}
               loading={isLoading}
               id={id}
+              isFetching={isFetching}
             />
 }
 export default EditNews;
