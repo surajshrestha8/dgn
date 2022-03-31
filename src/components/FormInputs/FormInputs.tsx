@@ -1,7 +1,7 @@
 import { DatePicker } from '@progress/kendo-react-dateinputs';
 import { DropDownList } from '@progress/kendo-react-dropdowns';
 import { FieldRenderProps , FieldWrapper} from '@progress/kendo-react-form';
-import { Input, RadioGroup, InputPropsContext } from '@progress/kendo-react-inputs';
+import { Input, RadioGroup, InputPropsContext,TextArea } from '@progress/kendo-react-inputs';
 import { Label, Error, Hint } from '@progress/kendo-react-labels';
 import { Icon } from '@progress/kendo-react-common';
 import classes from  './forminputs.module.css';
@@ -115,9 +115,8 @@ export const FormInput = (fieldRenderProps: FieldRenderProps) => {
           {label}
         </Label>
         <div className={"k-form-field-wrap"}>
-          <Input
+          <TextArea
             valid={valid}
-            type={type}
             id={id}
             disabled={disabled}
             ariaDescribedBy={`${hintId} ${errorId}`}

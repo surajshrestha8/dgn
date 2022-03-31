@@ -1,10 +1,9 @@
 import { FormInput } from "../../components/FormInputs/FormInputs";
 import { Form, Field, FormElement} from '@progress/kendo-react-form';
 import { emailValidator } from "../../hooks/FormValidators/formvalidators";
-
-import ButtonComponent from "../../components/Button/Buttons";
+import {ButtonComponent} from "../../components/Button/Buttons";
 import { Button } from "@progress/kendo-react-buttons";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 const ForgotPassword = () => {
     const navigate = useNavigate();
     return (

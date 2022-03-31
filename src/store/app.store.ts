@@ -1,10 +1,4 @@
 import create from 'zustand';
-import {NotificationProps} from '@progress/kendo-react-notification';
-interface Notification {
-    type : NotificationProps
-
-
-}
 
 export const useNotificationStore = create((set:any) => ({
     message: null,

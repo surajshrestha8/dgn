@@ -30,7 +30,7 @@ const News = () => {
     }
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    const { data, isLoading } = useQuery('todo',useGetTodo);
+    const { data, isLoading, isSuccess } = useQuery('todo',useGetTodo);
     const { mutateAsync, isLoading: deleteLoading } = useMutation(useDeleteTodo,{
         onSuccess: () => {
             setSuccessMessge("Todo deleted successfully");
@@ -59,22 +59,26 @@ const News = () => {
     return (
         <>        
             {isLoading && <Loader type={"pulsing"} /> }
-            <Grid 
-              data = {data?.slice(page.skip, page.take + page.skip)}
-              style={{ marginLeft:'10px', marginRight:'10px',marginTop: '10px'}}
-              skip={page.skip}
-              take={page.take}
-              total={data?.length}
-              pageable={true}
-              onPageChange={pageChange}
-            >
-                <GridColumn field="id" title="ID" />
-                <GridColumn field="title" title="Title" />
-                <GridColumn field="description" title="Description" />
-                <GridColumn field="date" title="Date"  format="{0:dd/MM/yyyy}"/>
-                <GridColumn title="Actions" cell={(e) => Actions(e)} />
-                </Grid>
-               
+            {isSuccess && (
+               <Grid 
+               data = {data?.slice(page.skip, page.take + page.skip)}
+               style={{ marginLeft:'10px', marginRight:'10px',marginTop: '10px'}}
+               skip={page.skip}
+               take={page.take}
+               total={data?.length}
+               pageable={true}
+               onPageChange={pageChange}
+             >
+                 <GridColumn field="id" title="ID" />
+                 <GridColumn field="title" title="Title" />
+                 <GridColumn field="description" title="Description" />
+                 <GridColumn field="date" title="Date"  format="{0:dd/MM/yyyy}"/>
+                 <GridColumn title="Actions" cell={(e) => Actions(e)} />
+                 </Grid>
+                
+
+            )}
+           
         {visible && (
         <Dialog title={"Please confirm"} onClose={toggleDialog}>
           <p style={{ margin: "25px", textAlign: "center" }}>

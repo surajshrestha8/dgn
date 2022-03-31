@@ -1,12 +1,12 @@
 import { Button } from "@progress/kendo-react-buttons";
 import { Loader } from "@progress/kendo-react-indicators";
-const ButtonComponent = ({themeColor,text,loading}: any) => {
+export const ButtonComponent = ({themeColor,text,loading,type}: any) => {
     return (
       <>
         <Button
-          style={{marginTop: '10px'}}
+          style={{marginTop: '10px',width:'100%'}}
           themeColor={themeColor} 
-          type={"submit"}
+          type={type}
         >
           {loading && <Loader themeColor={"light"} />}
           {!loading && text}
@@ -14,6 +14,7 @@ const ButtonComponent = ({themeColor,text,loading}: any) => {
       </>
     );
 };
-export default ButtonComponent;
+
+
 
 

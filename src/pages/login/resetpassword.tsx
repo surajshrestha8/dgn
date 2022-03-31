@@ -2,10 +2,10 @@ import { FormInput,PasswordInput } from "../../components/FormInputs/FormInputs"
 import { Form, Field, FormElement} from '@progress/kendo-react-form';
 import { emailValidator, passwordValidator } from "../../hooks/FormValidators/formvalidators";
 
-import ButtonComponent from "../../components/Button/Buttons";
+import {ButtonComponent} from "../../components/Button/Buttons";
 import { Button } from "@progress/kendo-react-buttons";
 import { Navigate, useNavigate } from "react-router-dom";
-const ResetPassword = () => {
+const ResetPassword =  () => {
     return (
         <>
         <div style={{display:'flex',justifyContent:'center'}}>

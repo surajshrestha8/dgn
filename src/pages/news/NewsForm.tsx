@@ -4,8 +4,8 @@ import { Button } from '@progress/kendo-react-buttons';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import { useSaveTodo, useUpdateTodo } from '../../hooks/todo/todohooks';
-import ButtonComponent from '../../components/Button/Buttons';
-import { useEffect, useState } from 'react';
+import {ButtonComponent} from '../../components/Button/Buttons';
+import { useState } from 'react';
 import { FormInput, DescriptionInput, DatePickerInput, RadioInput, DropdownInput } from '../../components/FormInputs/FormInputs';
 import { useNotificationStore } from '../../store/app.store';
 import { 
@@ -31,7 +31,7 @@ const NewsForm = ({todo,isSuccess,id}: any, loading:any) => {
         { label: "Other", value: "other" },
       ];
 
-  const country = ["Nepal", "India", "Pakistan", "Bangladesh", "Sri-Lanka", "Bhutan",];
+  const country = ["Nepal", "India", "Pakistan", "Bangladesh", "Sri-Lanka", "Bhutan"];
 
   const { setSuccessMessge, setSuccess } = useNotificationStore();
 
@@ -63,31 +63,26 @@ const NewsForm = ({todo,isSuccess,id}: any, loading:any) => {
     });
     const {mutateAsync:updateTodo,isLoading:updateLoading} = useMutation('todo',useUpdateTodo,{
       onSuccess:()=> {
-        setSuccessMessge("Todo updatedSuccessFully");
+        setSuccessMessge("Todo updated successfully" );
         setSuccess();
         queryClient.invalidateQueries('todo');
         navigate('/news');
       }
-
     });
     const handleSubmit = async (data: object) => {
         if(!id) {
           mutateAsync(data);
-          console.log(data);
           queryClient.invalidateQueries('todo');
 
         } else {
           updateTodo({data,id});
-          console.log(id);
-          console.log(data);
         }
-    
     };
-    
+    console.log(todo?.date.toString());
     return (
         <>
         <div style={{display:'flex',justifyContent:'center'}}>
-          {!isSuccess && <Loader type="pulsing"/>}
+          {!isSuccess && <Loader type="pulsing" size="large"/> }
           {isSuccess  && (
              <Form
              initialValues={{
@@ -104,6 +99,7 @@ const NewsForm = ({todo,isSuccess,id}: any, loading:any) => {
                        name="title"
                        label="Title"
                        placeholder="Enter title"
+                       icon="k-icon k-i-email"
                        component={FormInput}
                        validator={nameValidator}
                        />
@@ -145,15 +141,13 @@ const NewsForm = ({todo,isSuccess,id}: any, loading:any) => {
                          validator={dropDownValidator}
                          />
                        <ButtonComponent themeColor="tertiary" text="Submit" loading={isLoading || updateLoading} />
-                       <Button themeColor={"primary"} style={{marginTop: '10px', marginLeft: '10px'}} onClick={()=>navigate('/news')}>
+                       <Button themeColor={"primary"} style={{marginTop: '5px', width:'100%'}} onClick={()=>navigate('/news')}>
                          Cancel
                        </Button>
                  </FormElement>
              )}
              />
-
           )}
-         
             </div>
             </>
     )

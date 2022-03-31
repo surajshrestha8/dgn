@@ -10,9 +10,10 @@ import LoginPage from './pages/login/login';
 import RegisterPage from './pages/register/register';
 import ForgotPassword from './pages/login/forgotpassword';
 import ProtectedRoutes from './routes/ProtectedRoutes';
-import { useAuthStore, useNotificationStore } from './store/app.store';
+import { useAuthStore } from './store/app.store';
 import authRoutes from './routes/authRoutes';
 import ResetPassword from './pages/login/resetpassword';
+import CreateRole from './pages/roles/create-roles';
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
             <Route path="/news" element={<News />} />
             <Route path = "/news/create" element={<CreateNews />} /> 
             <Route path="/news/edit/:id" element={<EditNews />} />
+            <Route path= "/roles" element = {<CreateRole />} />
           </Routes>  
         </DrawerItem>
       )}

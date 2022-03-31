@@ -31,7 +31,8 @@ const emailRegex : RegExp = new RegExp(/\S+@\S+\.\S+/);
   !value ? "Enter email"
   : emailRegex.test(value) ? "" : "Enter valid email"
 
-const nameRegex: RegExp = new RegExp(/^[A-Z][a-z0-9_-]{0,30}$/); 
+const nameRegex: RegExp = new RegExp(/[A-Z][a-z]{0,30}$/); 
+const capitalRegex: RegExp = new RegExp(/[A-Z][A-Z]{0,30}$/);
 const whiteSpaceRegex: RegExp = new RegExp(/\s/)
 const numberRegex: RegExp = new RegExp(/\d/);
 const characterRegex: RegExp = new RegExp(/^[-_/.,@#$!`~*()=+^]/);
@@ -39,7 +40,8 @@ const characterRegex: RegExp = new RegExp(/^[-_/.,@#$!`~*()=+^]/);
 export const firstNameValidator = (value:string) =>
 !value ?  "Enter  name"
 : whiteSpaceRegex.test(value) ? "Name should not contain white space"
-: !nameRegex.test(value) ? "First letter should be capital" 
+: !nameRegex.test(value) ? "First letter should be capital"
+: capitalRegex.test(value) ? "Only first letter must be capital" 
 : numberRegex.test(value) ? "Name should not contain digits"
 : characterRegex.test(value) ? "Name must not contain other characters"
 : "" 

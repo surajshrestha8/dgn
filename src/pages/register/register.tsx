@@ -18,7 +18,6 @@ const RegisterPage = () => {
     const handleSubmit = (data: object) => {
         console.log(data);
     };
-    console.log(type);
 
     return (
         <>
@@ -50,8 +49,6 @@ const RegisterPage = () => {
                       component={FormInput}
                       validator={firstNameValidator}
                     />
-    
-
                     </div>
                    
                     <Field 

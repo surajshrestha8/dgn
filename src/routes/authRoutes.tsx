@@ -1,5 +1,6 @@
 import React from "react";
 import { lazy } from 'react';
+import CreateRole from "../pages/roles/create-roles";
 const HomePage = lazy(()=> import('../pages/home/homepage'));
 const News = lazy(()=> import('../pages/news/news'));
 
@@ -19,5 +20,10 @@ const authRoutes:Array<RouteItem> = [
         path: '/news',
         element: <News />,
     },
+    {
+        id: 3,
+        path: '/roles',
+        element: <CreateRole />,
+    }
 ]
 export default authRoutes;

@@ -72,11 +72,13 @@ const CustomItem = (props: any) => {
       navigate('/login');
       setSuccessMessge("Logged out");
       setSuccess();
-      
     }
  
     const clickCreate = () => {
       navigate(`${breadCrumbData[1]['id']}/create`);
+    }
+    const handleItemSelect = (e:any) => {
+      console.log(e?.id);
     }
   
     useEffect(()=> {
@@ -100,50 +102,19 @@ const CustomItem = (props: any) => {
         parentId: 1,
         route: "/admin/create"
       },
-      { separator: true },
-      {
-        text: "Product",
-        icon: "k-i-heart",
-        id: 2,
-        ["data-expanded"]: false,
-        route: "/product",
-      },
-      {
-        text: "Category",
-        icon: "k-i-minus",
-        id: 4,
-        parentId: 2,
-        route: "/category",
-        ["data-expanded"]: false,
-      },
-      {
-        text: "Create",
-        icon: 'k-i-plus',
-        id: 9,
-        parentId: 4,
-        route: 'product/category/create',
-      },
-      {
-        text: "Brand",
-        icon: "k-i-minus",
-        id: 5,
-        parentId: 2,
-        route: "",
-      },
-      { separator: true },
-      {
-        text: "User",
-        icon: "k-i-globe-outline",
-        ["data-expanded"]: false,
-        id: 3,
-        route: "/user",
-      },
       {
         text: "News",
         icon: "",
         ["data-expanded"]: false,
         id: 6,
         route: "/news",
+      },
+      {
+        text: "Roles",
+        icon: "",
+        ["data-expanded"]: false,
+        id:7,
+        route: "/roles",
       },
 
     ]);
@@ -238,11 +209,6 @@ const CustomItem = (props: any) => {
               )}
   
       </NotificationGroup>
-
-  
-
-     
-     
         <Drawer
           expanded={drawerExpanded}
           mode="push"
@@ -258,6 +224,7 @@ const CustomItem = (props: any) => {
             <div style={{display:'flex', justifyContent: 'space-between', marginTop: '10px'}}>
               <Breadcrumb 
                 data={breadCrumbData}
+                onItemSelect={handleItemSelect}
                 style={{ color: 'black' }}
               ></Breadcrumb>
               {breadCrumbData.length===2 && 
